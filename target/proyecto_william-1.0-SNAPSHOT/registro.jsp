@@ -51,7 +51,7 @@
         </div>
     </form>
     <div class="contenedor__pie">
-        <p>¿Ya tienes una cuenta? <a href="index.html">Inicia sesión aquí</a></p>
+        <p>¿Ya tienes una cuenta? <a href="index.jsp">Inicia sesión aquí</a></p>
     </div>
 </div>
 <script src="recursos/js/register.js"></script>

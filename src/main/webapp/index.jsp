@@ -22,11 +22,11 @@
             </select>
         </div>
         <div class="formulario__grupo">
-            <label for="nuevoDocumento" class="formulario__label">Documento</label>
+            <label class="formulario__label">Documento</label>
             <input autocomplete="off" type="text" id="Documento" class="formulario__input">
         </div>
         <div class="formulario__grupo">
-            <label for="nuevoNombre" class="formulario__label">Nombre y Apellido</label>
+            <label class="formulario__label">Nombre y Apellido</label>
             <input autocomplete="off" type="text" id="nombre" class="formulario__input">
         </div>
         <div class="formulario__grupo">

@@ -12,44 +12,41 @@ import java.io.IOException;
 public class RegistroServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServletException, IOException {
-        try {
-            // Procesa la solicitud
-            String tipoDocumento = request.getParameter("TipoDocumento");
-            String documento = request.getParameter("nuevoDocumento");
-            String nombre = request.getParameter("nombre");
-            String contrasena = request.getParameter("nuevaContrasena");
-            String ficha = request.getParameter("ficha");
-            String telefono = request.getParameter("telefono");
-            String email = request.getParameter("email");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-            // Validaciones y lógica del negocio
-            if (tipoDocumento == null || tipoDocumento.isEmpty() ||
-                    documento == null || documento.isEmpty() ||
-                    nombre == null || nombre.isEmpty() ||
-                    contrasena == null || contrasena.isEmpty() ||
-                    ficha == null || ficha.isEmpty() ||
-                    telefono == null || telefono.isEmpty() ||
-                    email == null || email.isEmpty()) {
-                request.setAttribute("error", "Por favor, complete todos los campos.");
-                request.getRequestDispatcher("registro.jsp").forward(request, response);
-                return;
-            }
+        // Obtener los datos del formulario
+        String tipoDocumento = request.getParameter("TipoDocumento");
+        String documento = request.getParameter("nuevoDocumento");
+        String nombre = request.getParameter("nombre");
+        String contrasena = request.getParameter("nuevaContrasena");
+        String ficha = request.getParameter("ficha");
+        String telefono = request.getParameter("telefono");
+        String email = request.getParameter("email");
 
-            // Lógica de inserción en la base de datos...
-            UsuarioDAO usuarioDAO = new UsuarioDAO();
-            Usuario usuario = new Usuario(tipoDocumento, documento, nombre, contrasena, ficha, telefono, email);
-            boolean registrado = usuarioDAO.registrarUsuario(usuario);
+        // Validar los datos
+        if (tipoDocumento == null || tipoDocumento.isEmpty() ||
+                documento == null || documento.isEmpty() ||
+                nombre == null || nombre.isEmpty() ||
+                contrasena == null || contrasena.isEmpty() ||
+                ficha == null || ficha.isEmpty() ||
+                telefono == null || telefono.isEmpty() ||
+                email == null || email.isEmpty()) {
 
-            if (registrado) {
-                response.sendRedirect("exito.jsp");
-            } else {
-                request.setAttribute("error", "Hubo un error al registrar el usuario.");
-                request.getRequestDispatcher("registro.jsp").forward(request, response);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("error", "Hubo un problema al procesar la solicitud.");
+            request.setAttribute("error", "Por favor, complete todos los campos.");
+            request.getRequestDispatcher("registro.jsp").forward(request, response);
+            return;
+        }
+
+        // Crear el objeto Usuario y registrar en la base de datos
+        Usuario usuario = new Usuario(tipoDocumento, documento, nombre, contrasena, ficha, telefono, email);
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        boolean registrado = usuarioDAO.registrarUsuario(usuario);
+
+        if (registrado) {
+            response.sendRedirect("exito.jsp");
+        } else {
+            request.setAttribute("error", "Hubo un error al registrar el usuario.");
             request.getRequestDispatcher("registro.jsp").forward(request, response);
         }
     }
